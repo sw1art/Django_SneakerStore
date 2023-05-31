@@ -1,0 +1,7 @@
+{% extends "account/email/base_message.txt" %}
+{% load account %}
+{% load i18n %}
+
+{% block content %}{% autoescape off %}{% user_display user as user_display %}{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Вы получили это письмо в связи с тем, что вы указали электронную почту для регистрации аккаунта на сайте: {{ site_domain }}.
+Для подверждения электронной почты необходимо перейти по адрессу: {{ activate_url }}.
+Если это были не вы, то не переходите по ссылке подверждения!{% endblocktrans %}{% endautoescape %}{% endblock %}

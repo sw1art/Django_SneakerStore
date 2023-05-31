@@ -59,16 +59,19 @@ INSTALLED_APPS = [
 LOGIN_REDIRECT_URL = 'home'
 ACCOUNT_LOGOUT_URL = 'home'
 
-ACCOUNT_USERNAME_REQUIRED = True
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+
+# ADD AFTER
+# ACCOUNT_EMAIL_VERIFICATION = !!!
 
 SITE_ID = 1
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend'
 )
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+DEFAULT_FROM_EMAIL = 'admin@sneakerstore.ru'
+
 ACCOUNT_LANGUAGES = [
     ('ru', 'Russian'),
 ]
