@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     # Local application
     'accounts.apps.AccountsConfig',
     'pages.apps.PagesConfig',
+    'sneakers.apps.SneakersConfig',
 ]
 
 # django-allauth configuration
