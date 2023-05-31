@@ -1,0 +1,9 @@
+
+h1, h2 {
+    color: red
+}
+
+.card__img {
+    height: 300px;
+    width: auto;
+}

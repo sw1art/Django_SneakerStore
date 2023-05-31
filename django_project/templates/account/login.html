@@ -1,0 +1,14 @@
+{% extends '_base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}SneakerShop - Авторизация{% endblock title %}
+
+{% block content %}
+    <h2>Авторизация</h2>
+    <form method='post'>
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button class="btn btn-dark" type='sumbit'>Авторизироваться</button>
+    </form>
+{% endblock content %}
+
