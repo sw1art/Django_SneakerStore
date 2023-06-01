@@ -9,8 +9,7 @@
             <div>
                 <img src="{{ sneaker.image.url }}" alt="Кроссовки" width="200">
                 <h4><a href="{{ sneaker.get_absolute_url }}">{{ sneaker.title }}</a></h4>
-                <p>Бренд: {{ sneaker.brand }}</p>
-                <p>Цена: {{ sneaker.price }}</p>
+                <h5>Цена: {{ sneaker.price }}</h5>
             </div>
         {% endfor %}
     </ul>

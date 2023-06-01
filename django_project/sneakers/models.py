@@ -7,7 +7,7 @@ import uuid
 class Brand(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(max_length=400, null=True, blank=True)
-    logo = models.ImageField(upload_to='brand_logos/', null=True, blank=True)
+    image = models.ImageField(upload_to='brand_logos/', default='brand_logos/default.png')
 
     class Meta:
         verbose_name = 'Бренд'
