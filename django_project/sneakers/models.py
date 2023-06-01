@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
+from django.contrib.auth import get_user_model
 
 import uuid
 
@@ -19,7 +20,7 @@ class Brand(models.Model):
 class Sneaker(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(unique=True, max_length=300)
-    brand = models.ForeignKey(to=Brand, on_delete=models.CASCADE)
+    brand = models.ForeignKey(to=Brand, on_delete=models.CASCADE, related_name='sneakers')
     description = models.TextField(max_length=2000, null=True, blank=True)
     feature = models.TextField(max_length=500, null=True, blank=True)
     price = models.DecimalField(max_digits=7, decimal_places=0)
@@ -57,4 +58,23 @@ class Size(models.Model):
 
     def __str__(self):
         return f"US: {self.size_us}, RU: {self.size_ru}, UK: {self.size_uk}, CM: {self.size_cm}"
-    
+
+
+class Review(models.Model): # new
+    sneaker = models.ForeignKey(
+        Sneaker,
+        on_delete=models.CASCADE,
+        related_name="reviews",
+        )
+    review = models.CharField(max_length=300)
+    author = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.CASCADE,
+    )
+
+    class Meta:
+        verbose_name = 'Отзыв'
+        verbose_name_plural = 'Отзывы'
+
+    def __str__(self):
+        return self.review

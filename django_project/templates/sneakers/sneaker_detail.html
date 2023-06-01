@@ -19,4 +19,15 @@
             </ul>
         </div>
 
+        <div>
+            <h4>Отзывы</h4>
+            <ul>
+                {% for review in sneaker_detail.reviews.all %}
+                <li>
+                    <p>{{ review.author }}</p>
+                    <p>{{ review.review }}</p>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
 {% endblock content %}
