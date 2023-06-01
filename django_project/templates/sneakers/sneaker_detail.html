@@ -1,0 +1,22 @@
+{% extends '_base.html' %}
+
+{% block title %}SneakerStore - Кроссовки{% endblock title %}
+
+{% block content %}
+        <div>
+            <img src="{{ sneaker_detail.image.url }}" alt="Кроссовки" width="200">
+            <h4>{{ sneaker_detail.title }}</h4>
+            <p>Бренд: {{ sneaker_detail.brand }}</p>
+            <p>Описание: {{ sneaker_detail.description }}</p>
+            <p>Характеристики: {{ sneaker_detail.feature }}</p>
+            <p>Цена: {{ sneaker_detail.price }}</p>
+            <p>Дата релиза: {{ sneaker_detail.release_date }}</p>
+            <p>Размеры:</p>
+            <ul>
+                {% for size in sneaker_detail.sizes.all %}
+                    <li>{{ size }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+{% endblock content %}
