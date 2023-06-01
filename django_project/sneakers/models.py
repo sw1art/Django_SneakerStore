@@ -38,7 +38,7 @@ class Sneaker(models.Model):
         return super().save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('sneaker_detail', kwargs={"slug": self.slug, "uuid": self.id})
+        return reverse('sneaker_detail', kwargs={'slug': self.slug, 'uuid': self.id})
     
     def __str__(self):
         return self.title
