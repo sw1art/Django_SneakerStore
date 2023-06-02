@@ -30,8 +30,12 @@ class Sneaker(models.Model):
     slug = models.SlugField(null=False, unique=True, max_length=310)
 
     class Meta:
+        permissions = [
+            ('base_status', 'Можно покупать любые'),
+        ]
         verbose_name = 'Кроссовки'
         verbose_name_plural = 'Кроссовки'
+
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -75,6 +79,7 @@ class Review(models.Model): # new
     class Meta:
         verbose_name = 'Отзыв'
         verbose_name_plural = 'Отзывы'
+
 
     def __str__(self):
         return self.review

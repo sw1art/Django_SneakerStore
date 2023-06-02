@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
-
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Permission
 
 from .models import Sneaker, Brand, Size, Review
 
@@ -43,6 +43,9 @@ class SneakerTets(TestCase):
                                'uuid': self.sneaker.id,
                                }
             )
+        self.base_status = Permission.objects.get(
+            codename = 'base_status',
+        )
 
     # Databases test
     def test_sneaker_creation(self):
@@ -92,8 +95,13 @@ class SneakerTets(TestCase):
     def test_sneaker_list_view(self):
         response = self.client.get(reverse('sneaker_list'))
         no_response = self.client.get('/no_sneaker')
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
         self.assertEqual(no_response.status_code, 404)
+
+        self.client.login(email='testuser123@email.com', password='testpassword123')
+        self.user.user_permissions.add(self.base_status)
+
+        self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'sneakers/sneaker_list.html')
         self.assertContains(response, 15000)
         self.assertContains(response, 'Мужские Nike Air Max 90')
@@ -101,8 +109,13 @@ class SneakerTets(TestCase):
     def test_sneaker_detail_view(self):
         response = self.client.get(self.url)
         no_response = self.client.get('/sneakers/nike-23232323232232sdasd')
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
         self.assertEqual(no_response.status_code, 404)
+
+        self.client.login(username='testuser123', password='testpassword123')
+        self.user.user_permissions.add(self.base_status)
+        
+        self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'sneakers/sneaker_detail.html')
         self.assertContains(response, 15000)
         self.assertContains(response, 'Мужские Nike Air Max 90')
