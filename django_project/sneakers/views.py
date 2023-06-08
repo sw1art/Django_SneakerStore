@@ -15,4 +15,4 @@ class SneakerDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView)
     context_object_name = 'sneaker_detail'
     slug_url_kwarg = 'slug'
     login_url = 'account_login'
-    permission_required = 'sneaker.base_status'
+    permission_required = 'sneakers.base_status'
