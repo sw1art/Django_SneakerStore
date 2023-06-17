@@ -30,6 +30,9 @@ class Sneaker(models.Model):
     slug = models.SlugField(null=False, unique=True, max_length=310)
 
     class Meta:
+        indexes = [
+            models.Index(fields=["id"], name="id_index")
+        ]
         permissions = [
             ('base_status', 'Можно покупать любые'),
         ]

@@ -2,6 +2,7 @@ from django.views.generic import ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.db.models import Q
 
+from accounts.models import CustomUser
 from .models import Sneaker
 
 class SneakerListView(LoginRequiredMixin, ListView):
@@ -17,6 +18,14 @@ class SneakerDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView)
     slug_url_kwarg = 'slug'
     login_url = 'account_login'
     permission_required = 'sneakers.base_status'
+    queryset = Sneaker.objects.all().prefetch_related('reviews__author',)
+
+    def get_queryset(self):
+        return (
+            Sneaker.objects.select_related('brand'), 
+            # CustomUser.objects.prefetch_related('groups', 'user_permissions').get(id=1)
+        )
+
 
 class SeachResultsListView(ListView):
     model = Sneaker
