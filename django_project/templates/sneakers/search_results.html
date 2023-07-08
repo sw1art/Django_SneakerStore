@@ -4,10 +4,15 @@
 
 {% block content %}
     <h2>Результаты поиска</h2>
-        {% for sneaker in sneaker_list %}
-            <div>
-                <h5><a href="{{ sneaker.get_absolute_url }}">{{ sneaker.title }}</a></h5>
-                <h5>Цена: {{ sneaker.price }}</h5>
-            </div>
-        {% endfor %}
+        {% if sneaker_list %}
+            {% for sneaker in sneaker_list %}
+                <div>
+                    <img src="{{ sneaker.image.url }}" alt="Кроссовки" width="200">
+                    <h4><a href="{{ sneaker.get_absolute_url }}">{{ sneaker.title }}</a></h4>
+                    <h5>Цена: {{ sneaker.price }}</h5>
+                </div>
+            {% endfor %}
+        {% else %}
+            <h5>Извините, но по вашему запросу ничего не найдено.</h5>
+        {% endif %}
 {% endblock content %}

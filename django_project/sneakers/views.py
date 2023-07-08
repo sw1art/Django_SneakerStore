@@ -20,14 +20,8 @@ class SneakerDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView)
     permission_required = 'sneakers.base_status'
     queryset = Sneaker.objects.all().prefetch_related('reviews__author',)
 
-    def get_queryset(self):
-        return (
-            Sneaker.objects.select_related('brand'), 
-            # CustomUser.objects.prefetch_related('groups', 'user_permissions').get(id=1)
-        )
 
-
-class SeachResultsListView(ListView):
+class SearchResultsListView(ListView):
     model = Sneaker
     template_name = 'sneakers/search_results.html'
     context_object_name = 'sneaker_list'

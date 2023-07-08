@@ -1,5 +1,4 @@
 # https://docs.djangoproject.com/en/4.2/ref/settings/
-
 from pathlib import Path
 from environs import Env
 
@@ -17,6 +16,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('DJANGO_SECRET_KEY')
 
+GOOGLE_AUTH_CLIENT_ID = env('GOOGLE_AUTH_CLIENT_ID')
+GOOGLE_AUTH_SECRET = env('GOOGLE_AUTH_SECRET')
+GOOGLE_APP_ID = env('GOOGLE_APP_ID')
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool("DJANGO_DEBUG")
 
@@ -33,12 +36,18 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    
 
     # Third-party
     'crispy_forms',
     'crispy_bootstrap5',
     'allauth',
     'allauth.account',
+
+    # Social account authentication
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+
     'debug_toolbar',
 
     # Local applications
@@ -53,12 +62,26 @@ INSTALLED_APPS = [
 # django-allauth configuration
 LOGIN_REDIRECT_URL = 'home'
 ACCOUNT_LOGOUT_URL = 'home'
+# ACCOUNT_DEFAULT_HTTP_PROTOCOL='https'
 
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 # ADD AFTER
 # ACCOUNT_EMAIL_VERIFICATION = !!!
 
+# SOCIALACCOUNT_PROVIDERS
+SOCIALACCOUNT_LOGIN_ON_GET=True
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': GOOGLE_AUTH_CLIENT_ID,
+            'secret': GOOGLE_AUTH_SECRET,
+            'key': GOOGLE_APP_ID,
+        }
+    }
+}
+
 SITE_ID = 1
+
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend'
@@ -107,17 +130,6 @@ WSGI_APPLICATION = 'django_project.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'postgres',
-#         'USER': 'postgres',
-#         'PASSWORD': 'postgres',
-#         'HOST': 'db',
-#         'PORT': 5432,
-#     }
-# }
 
 DATABASES = {
     'default': env.dj_db_url('DATABASE_URL',
