@@ -43,6 +43,10 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'allauth',
     'allauth.account',
+    'django_filters',
+
+    # Search
+    'django_elasticsearch_dsl',
 
     # Social account authentication
     'allauth.socialaccount',
@@ -105,7 +109,12 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    "django.middleware.cache.FetchFromCacheMiddleware",
 ]
+
+CACHE_MIDDLEWARE_ALIAS = "default"
+CACHE_MIDDLEWARE_SECONDS = 604800
+CACHE_MIDDLEWARE_KEY_PREFIX = ""
 
 ROOT_URLCONF = 'django_project.urls'
 
@@ -199,3 +208,10 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 # Redirect
 LOGIN_REDIRECT_URL = 'home'
 
+# Search
+ELASTICSEARCH_DSL={
+    'default': {
+        'hosts': 'elasticsearch'
+    },
+}
+ELASTICSEARCH_DSL_PARALLEL=True

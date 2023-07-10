@@ -15,7 +15,7 @@ class SneakerTets(TestCase):
             )
 
         self.brand = Brand.objects.create(
-            name='Nike', 
+            name='Jordan', 
             description='Nike brand'
             )
         self.size = Size.objects.create(
@@ -26,7 +26,7 @@ class SneakerTets(TestCase):
             size_cm = 27
             )
         self.sneaker = Sneaker.objects.create(
-            title = 'Мужские Nike Air Max 90',
+            title = 'Jordan 3',
             brand = self.brand,
             description = 'Nike Air Max 90 sneakers',
             feature = 'color: white',
@@ -50,7 +50,7 @@ class SneakerTets(TestCase):
     # Databases test
     def test_sneaker_creation(self):
         self.assertEqual(Sneaker.objects.count(), 1)
-        self.assertEqual(self.sneaker.title, 'Мужские Nike Air Max 90')
+        self.assertEqual(self.sneaker.title, 'Jordan 3')
         self.assertEqual(self.sneaker.brand, self.brand)
         self.assertEqual(self.sneaker.description, 'Nike Air Max 90 sneakers')
         self.assertEqual(self.sneaker.feature, 'color: white')
@@ -87,7 +87,7 @@ class SneakerTets(TestCase):
 
     def test_review_creation(self):
         self.assertEqual(get_user_model().objects.count(), 1)
-        self.assertEqual(self.review.sneaker.title, 'Мужские Nike Air Max 90')
+        self.assertEqual(self.review.sneaker.title, 'Jordan 3')
         self.assertEqual(self.review.author.username, 'review_user')
         self.assertEqual(self.review.review, 'Review. five stars')
 
@@ -99,7 +99,7 @@ class SneakerTets(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'sneakers/sneaker_list.html')
         self.assertContains(response, 15000)
-        self.assertContains(response, 'Мужские Nike Air Max 90')
+        self.assertContains(response, 'Jordan 3')
 
     def test_sneaker_detail_view_for_logout_user(self):
         self.client.logout()
@@ -119,7 +119,7 @@ class SneakerTets(TestCase):
         no_response = self.client.get('/sneakers/no-response')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(no_response.status_code, 404)
-        self.assertContains(response, 'Мужские Nike Air Max 90')
+        self.assertContains(response, 'Jordan 3')
         self.assertContains(response, 15000)
         self.assertTemplateUsed(response, 'sneakers/sneaker_detail.html')
     

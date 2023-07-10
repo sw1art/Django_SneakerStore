@@ -2,8 +2,8 @@ from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 from django.contrib.auth import get_user_model
-
 import uuid
+
 
 class Brand(models.Model):
     name = models.CharField(max_length=100)
@@ -28,7 +28,7 @@ class Sneaker(models.Model):
     sizes = models.ManyToManyField('Size')
     image = models.ImageField(upload_to='sneaker_images/', default='sneaker_images/default.jpg')
     slug = models.SlugField(null=False, unique=True, max_length=310)
-
+    
     class Meta:
         indexes = [
             models.Index(fields=["id"], name="id_index")
@@ -39,7 +39,6 @@ class Sneaker(models.Model):
         verbose_name = 'Кроссовки'
         verbose_name_plural = 'Кроссовки'
 
-
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = f'{slugify(self.title)}{self.id}'
@@ -49,8 +48,7 @@ class Sneaker(models.Model):
         return reverse('sneaker_detail', kwargs={'slug': self.slug, 'uuid': self.id})
     
     def __str__(self):
-        return self.title
-    
+        return self.title    
 
 class Size(models.Model):
     size_us = models.DecimalField(max_digits=3, decimal_places=1, null=True, blank=True)
